@@ -18,10 +18,10 @@ function calcPoints(vertical, marks, dots, step, min, max) {
 }
 
 const Steps = ({ prefixCls, vertical, marks, dots, step, included,
-                lowerBound, upperBound, max, min }) => {
+                lowerBound, upperBound, max, min, stepLeft }) => {
   const range = max - min;
-  const elements = calcPoints(vertical, marks, dots, step, min, max).map((point) => {
-    const offset = `${Math.abs(point - min) / range * 100}%`;
+  const elements = calcPoints(vertical, marks, dots, step, min, max).map((point, i) => {
+    const offset = !!stepLeft ? stepLeft(point, i) : `${Math.abs(point - min) / range * 100}%`;
     const style = vertical ? { bottom: offset } : { left: offset };
 
     const isActived = (!included && point === upperBound) ||
