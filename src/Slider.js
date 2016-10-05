@@ -122,9 +122,15 @@ class Slider extends React.Component {
     const props = this.props;
     const state = this.state;
 
-    let diffPosition = position - this.startPosition;
-    diffPosition = this.props.vertical ? -diffPosition : diffPosition;
-    const diffValue = diffPosition / this.getSliderLength() * (props.max - props.min);
+    const pixelOffset = position - this.getSliderStart();
+    const v = this.calcValue(pixelOffset);
+    const diffValue = !this.props.vertical
+      ? (v - this.startValue)
+      : (this.startValue - v);
+
+    // let diffPosition = position - this.startPosition;
+    // diffPosition = this.props.vertical ? -diffPosition : diffPosition;
+    // const diffValue = diffPosition / this.getSliderLength() * (props.max - props.min);
 
     const value = this.trimAlignValue(this.startValue + diffValue);
     const oldValue = state.bounds[state.handle];
@@ -291,7 +297,7 @@ class Slider extends React.Component {
     }
 
     const diffs = points.map((point) => Math.abs(val - point));
-    const closestPoint = points[diffs.indexOf(Math.min.apply(Math, diffs))];
+    const closestPoint = points[diffs.indexOf(Math.min(...diffs))];
 
     return step !== null ? parseFloat(closestPoint.toFixed(this.getPrecision(step))) : closestPoint;
   }
@@ -355,8 +361,9 @@ class Slider extends React.Component {
   }
 
   calcOffset(value) {
-    const { min, max, stepLeft } = this.props;
-    const points = this.getPoints();
+    const { min, max, stepLeft, marks } = this.props;
+    const points = Object.keys(marks).map(parseFloat).sort();
+    // const points = this.getPoints();
     const ratio = !stepLeft
       ? (value - min) / (max - min)
       : (() => {
@@ -374,7 +381,7 @@ class Slider extends React.Component {
   }
 
   calcValue(offset) {
-    const { vertical, min, max, stepLeft } = this.props;
+    const { vertical, min, max, stepLeft, marks } = this.props;
     const ratio = Math.abs(offset / this.getSliderLength());
     if (!stepLeft) {
       const value = vertical
@@ -383,7 +390,8 @@ class Slider extends React.Component {
       return value;
     }
 
-    const points = this.getPoints();
+    const points = Object.keys(marks).map(parseFloat).sort();
+    // const points = this.getPoints();
     let i;
     let lastPointOffset;
     for (i = 0; i < points.length; ++i) {
