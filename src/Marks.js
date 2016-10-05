@@ -18,7 +18,8 @@ const Marks = ({
   const markWidth = unit * 0.9;
 
   const range = max - min;
-  const elements = marksKeys.map(parseFloat).sort((a, b) => a - b).map((point, i) => {
+  const points = marksKeys.map(parseFloat).sort((a, b) => a - b);
+  const elements = points.map((point, i) => {
     const isActived = (!included && point === upperBound) ||
             (included && point <= upperBound && point >= lowerBound);
     const markClassName = classNames({
@@ -27,7 +28,7 @@ const Marks = ({
     });
 
     const left = !!markLeft
-      ? markLeft(i, point)
+      ? markLeft(i, point, points, min, max)
       : `${(point - min) / range * 100}%`;
 
     const bottomStyle = {
