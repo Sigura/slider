@@ -14,7 +14,7 @@ function calcPoints(vertical, marks, dots, step, min, max) {
       points.push(i);
     }
   }
-  return points;
+  return points.sort();
 }
 
 const Steps = ({ prefixCls, vertical, marks, dots, step, included,
