@@ -394,9 +394,11 @@ class Slider extends React.Component {
     }
     const step = i - 1;
     const behindPointOffset = parseFloat(stepLeft(step, points[step], points, min, max)) / 100;
-    const value = (ratio - behindPointOffset) /
-      (lastPointOffset - behindPointOffset) *
-      (points[i] - points[step]) + points[step];
+    const value = lastPointOffset !== behindPointOffset
+      ? (ratio - behindPointOffset) /
+        (lastPointOffset - behindPointOffset) *
+        (points[i] - points[step]) + points[step]
+      : points[step];
 
     return value;
   }
