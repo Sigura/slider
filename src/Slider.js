@@ -355,15 +355,49 @@ class Slider extends React.Component {
   }
 
   calcOffset(value) {
-    const { min, max } = this.props;
-    const ratio = (value - min) / (max - min);
+    const { min, max, stepLeft } = this.props;
+    const points = this.getPoints();
+    const ratio = !stepLeft
+      ? (value - min) / (max - min)
+      : (() => {
+        let i;
+        for (i = 0; i < points.length; ++i) {
+          if (points[i] > value) {
+            break;
+          }
+        }
+        const step = i - 1;
+
+        return parseFloat(stepLeft(step, points[step], points, min, max)) / 100;
+      })();
     return ratio * 100;
   }
 
   calcValue(offset) {
-    const { vertical, min, max } = this.props;
+    const { vertical, min, max, stepLeft } = this.props;
     const ratio = Math.abs(offset / this.getSliderLength());
-    const value = vertical ? (1 - ratio) * (max - min) + min : ratio * (max - min) + min;
+    if (!stepLeft) {
+      const value = vertical
+        ? (1 - ratio) * (max - min) + min
+        : ratio * (max - min) + min;
+      return value;
+    }
+
+    const points = this.getPoints();
+    let i;
+    let lastPointOffset;
+    for (i = 0; i < points.length; ++i) {
+      lastPointOffset = parseFloat(stepLeft(i, points[i], points, min, max)) / 100;
+      if (lastPointOffset > ratio) {
+        break;
+      }
+    }
+    const step = i - 1;
+    const behindPointOffset = parseFloat(stepLeft(step, points[step], points, min, max)) / 100;
+    const value = (ratio - behindPointOffset) /
+      (lastPointOffset - behindPointOffset) *
+      (points[i] - points[step]) + points[step];
+
     return value;
   }
 
