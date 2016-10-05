@@ -2,6 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 import warning from 'warning';
 
+const numberComapre = (a, b) => a - b;
+
 function calcPoints(vertical, marks, dots, step, min, max) {
   warning(
     dots ? step > 0 : true,
@@ -14,7 +16,7 @@ function calcPoints(vertical, marks, dots, step, min, max) {
       points.push(i);
     }
   }
-  return points.sort();
+  return points.sort(numberComapre);
 }
 
 const Steps = ({ prefixCls, vertical, marks, dots, step, included,

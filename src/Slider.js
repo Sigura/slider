@@ -7,6 +7,8 @@ import Steps from './Steps';
 import Marks from './Marks';
 import warning from 'warning';
 
+const numberComapre = (a, b) => a - b;
+
 function noop() {
 }
 
@@ -143,7 +145,7 @@ class Slider extends React.Component {
       const originalValue = state.bounds[nextHandle];
       this.pushSurroundingHandles(nextBounds, nextHandle, originalValue);
     } else if (props.allowCross) {
-      nextBounds.sort((a, b) => a - b);
+      nextBounds.sort(numberComapre);
       nextHandle = nextBounds.indexOf(value);
     }
     this.onChange({
@@ -258,8 +260,7 @@ class Slider extends React.Component {
           pointsObject[point] = point;
         }
       }
-      const points = Object.keys(pointsObject).map(parseFloat);
-      points.sort((a, b) => a - b);
+      const points = Object.keys(pointsObject).map(parseFloat).sort(numberComapre);
       this._getPointsCache = { marks, step, points };
     }
     return this._getPointsCache.points;
@@ -362,7 +363,7 @@ class Slider extends React.Component {
 
   calcOffset(value) {
     const { min, max, stepLeft, marks } = this.props;
-    const points = Object.keys(marks).map(parseFloat).sort();
+    const points = Object.keys(marks).map(parseFloat).sort(numberComapre);
     // const points = this.getPoints();
     const ratio = !stepLeft
       ? (value - min) / (max - min)
@@ -390,7 +391,7 @@ class Slider extends React.Component {
       return value;
     }
 
-    const points = Object.keys(marks).map(parseFloat).sort();
+    const points = Object.keys(marks).map(parseFloat).sort(numberComapre);
     // const points = this.getPoints();
     let i;
     let lastPointOffset;
