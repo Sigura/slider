@@ -21,7 +21,7 @@
     "assets/*.css",
     "lib"
   ],
-  "licenses": "MIT",
+  "license": "MIT",
   "main": "./lib/index.js",
   "style": "./assets/index.css",
   "config": {

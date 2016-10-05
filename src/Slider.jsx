@@ -424,6 +424,8 @@ class Slider extends React.Component {
         tipTransitionName,
         tipFormatter,
         children,
+        markLeft,
+        stepLeft,
     } = this.props;
 
     const customHandle = this.props.handle;
@@ -491,11 +493,13 @@ class Slider extends React.Component {
         <Steps prefixCls={prefixCls} vertical = {vertical} marks={marks} dots={dots} step={step}
           included={isIncluded} lowerBound={bounds[0]}
           upperBound={bounds[bounds.length - 1]} max={max} min={min}
+          stepLeft={stepLeft}
         />
         {handles}
         <Marks className={`${prefixCls}-mark`} vertical = {vertical} marks={marks}
           included={isIncluded} lowerBound={bounds[0]}
           upperBound={bounds[bounds.length - 1]} max={max} min={min}
+          markLeft={markLeft}
         />
         {children}
       </div>
@@ -522,6 +526,8 @@ Slider.propTypes = {
   tooltipPrefixCls: React.PropTypes.string,
   disabled: React.PropTypes.bool,
   children: React.PropTypes.any,
+  markLeft: React.PropTypes.func,
+  stepLeft: React.PropTypes.func,
   onBeforeChange: React.PropTypes.func,
   onChange: React.PropTypes.func,
   onAfterChange: React.PropTypes.func,
