@@ -27,9 +27,10 @@ const Marks = ({
       [`${className}-text-active`]: isActived,
     });
 
-    const left = !!markLeft
+    const left = `${!!markLeft
       ? markLeft(i, point, points, min, max)
-      : `${(point - min) / range * 100}%`;
+      : (point - min) / range * 100
+    }$`;
 
     const bottomStyle = {
       // height: markWidth + '%',
