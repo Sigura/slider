@@ -30,7 +30,7 @@ const Marks = ({
     const left = `${!!markLeft
       ? markLeft(i, point, points, min, max)
       : (point - min) / range * 100
-    }$`;
+    }%`;
 
     const bottomStyle = {
       // height: markWidth + '%',
