@@ -1,4 +1,5 @@
 import React, { cloneElement } from 'react';
+import PropTypes from 'prop-types';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import classNames from 'classnames';
 import Track from './Track';
@@ -553,42 +554,42 @@ class Slider extends React.Component {
 }
 
 Slider.propTypes = {
-  min: React.PropTypes.number,
-  max: React.PropTypes.number,
-  step: React.PropTypes.number,
-  defaultValue: React.PropTypes.oneOfType([
-    React.PropTypes.number,
-    React.PropTypes.arrayOf(React.PropTypes.number),
+  min: PropTypes.number,
+  max: PropTypes.number,
+  step: PropTypes.number,
+  defaultValue: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.arrayOf(PropTypes.number),
   ]),
-  value: React.PropTypes.oneOfType([
-    React.PropTypes.number,
-    React.PropTypes.arrayOf(React.PropTypes.number),
+  value: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.arrayOf(PropTypes.number),
   ]),
-  marks: React.PropTypes.object,
-  included: React.PropTypes.bool,
-  className: React.PropTypes.string,
-  prefixCls: React.PropTypes.string,
-  tooltipPrefixCls: React.PropTypes.string,
-  disabled: React.PropTypes.bool,
-  children: React.PropTypes.any,
-  markLeft: React.PropTypes.func,
-  stepLeft: React.PropTypes.func,
-  onBeforeChange: React.PropTypes.func,
-  onChange: React.PropTypes.func,
-  onAfterChange: React.PropTypes.func,
-  handle: React.PropTypes.element,
-  tipTransitionName: React.PropTypes.string,
-  tipFormatter: React.PropTypes.func,
-  dots: React.PropTypes.bool,
-  range: React.PropTypes.oneOfType([
-    React.PropTypes.bool,
-    React.PropTypes.number,
+  marks: PropTypes.object,
+  included: PropTypes.bool,
+  className: PropTypes.string,
+  prefixCls: PropTypes.string,
+  tooltipPrefixCls: PropTypes.string,
+  disabled: PropTypes.bool,
+  children: PropTypes.any,
+  markLeft: PropTypes.func,
+  stepLeft: PropTypes.func,
+  onBeforeChange: PropTypes.func,
+  onChange: PropTypes.func,
+  onAfterChange: PropTypes.func,
+  handle: PropTypes.element,
+  tipTransitionName: PropTypes.string,
+  tipFormatter: PropTypes.func,
+  dots: PropTypes.bool,
+  range: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.number,
   ]),
-  vertical: React.PropTypes.bool,
-  allowCross: React.PropTypes.bool,
-  pushable: React.PropTypes.oneOfType([
-    React.PropTypes.bool,
-    React.PropTypes.number,
+  vertical: PropTypes.bool,
+  allowCross: PropTypes.bool,
+  pushable: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.number,
   ]),
 };
 
