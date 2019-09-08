@@ -1,4 +1,4 @@
-import React, { cloneElement } from 'react';
+import React, { Component, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import addEventListener from 'rc-util/lib/Dom/addEventListener';
 import classNames from 'classnames';
@@ -30,7 +30,7 @@ function pauseEvent(e) {
   e.preventDefault();
 }
 
-class Slider extends React.Component {
+class Slider extends Component {
   constructor(props) {
     super(props);
 
@@ -38,10 +38,9 @@ class Slider extends React.Component {
     const initialValue = range ? Array.apply(null, Array(range + 1)).map(() => min) : min;
     const defaultValue = ('defaultValue' in props ? props.defaultValue : initialValue);
     const value = (props.value !== undefined ? props.value : defaultValue);
-
     const bounds = (range ? value : [min, value]).map(v => this.trimAlignValue(v));
-
     let recent;
+
     if (range && bounds[0] === bounds[bounds.length - 1] && bounds[0] === max) {
       recent = 0;
     } else {
@@ -223,7 +222,7 @@ class Slider extends React.Component {
   }
 
   getSliderLength() {
-    const slider = this.refs.slider;
+    const slider = this.sliderRef;
     if (!slider) {
       return 0;
     }
@@ -232,7 +231,7 @@ class Slider extends React.Component {
   }
 
   getSliderStart() {
-    const slider = this.refs.slider;
+    const slider = this.sliderRef;
     const rect = slider.getBoundingClientRect();
 
     return this.props.vertical ? rect.top : rect.left;
@@ -450,6 +449,10 @@ class Slider extends React.Component {
     this.setState({ handle: null });
   }
 
+  handleRef = (ref) => {
+    this.sliderRef = ref || this.sliderRef;
+  }
+
   render() {
     const {
         handle,
@@ -531,7 +534,7 @@ class Slider extends React.Component {
     });
 
     return (
-      <div ref="slider" className={sliderClassName}
+      <div ref={this.handleRef} className={sliderClassName}
         onTouchStart={disabled ? noop : this.onTouchStart.bind(this)}
         onMouseDown={disabled ? noop : this.onMouseDown.bind(this)}
       >
